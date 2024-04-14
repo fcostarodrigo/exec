@@ -1,0 +1,89 @@
+{
+  "name": "@fcostarodrigo/exec",
+  "version": "1.0.0",
+  "description": "Wrapper around node spawn process",
+  "main": "src/index.js",
+  "type": "module",
+  "publishConfig": {
+    "access": "public"
+  },
+  "types": "src/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fcostarodrigo/exec.git"
+  },
+  "keywords": [
+    "cli",
+    "args",
+    "shell",
+    "exec",
+    "child",
+    "process",
+    "spawn"
+  ],
+  "bugs": {
+    "url": "https://github.com/fcostarodrigo/exec/issues"
+  },
+  "homepage": "https://github.com/fcostarodrigo/exec#readme",
+  "scripts": {
+    "test": "vitest run",
+    "lint": "xo src",
+    "format": "prettier --write .",
+    "prepare": "husky"
+  },
+  "author": "Rodrigo Fernandes da Costa",
+  "license": "MIT",
+  "dependencies": {
+    "ora": "^8.0.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.12.7",
+    "eslint-config-prettier": "^9.1.0",
+    "husky": "^9.0.11",
+    "lint-staged": "^15.2.2",
+    "prettier": "^3.2.5",
+    "vitest": "^1.5.0",
+    "xo": "^0.58.0"
+  },
+  "xo": {
+    "rules": {
+      "unicorn/better-regex": "off",
+      "no-await-in-loop": "off",
+      "no-useless-escape": "off",
+      "unicorn/no-await-expression-member": "off",
+      "capitalized-comments": "off",
+      "unicorn/prevent-abbreviations": [
+        "error",
+        {
+          "replacements": {
+            "arg": {
+              "argument": false
+            },
+            "args": {
+              "arguments": false
+            },
+            "env": {
+              "environment": false
+            }
+          }
+        }
+      ]
+    },
+    "extends": [
+      "prettier"
+    ]
+  },
+  "lint-staged": {
+    "*": [
+      "prettier --no-error-on-unmatched-pattern --ignore-unknown --write"
+    ],
+    "*.{js,jsx,mjs}": [
+      "xo src --fix",
+      "vitest --run related"
+    ]
+  },
+  "prettier": {
+    "trailingComma": "all",
+    "printWidth": 100
+  }
+}
