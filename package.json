@@ -26,9 +26,7 @@
   },
   "homepage": "https://github.com/fcostarodrigo/exec#readme",
   "scripts": {
-    "test": "vitest run",
-    "lint": "xo src",
-    "format": "prettier --write .",
+    "test": "knip && xo --fix src && vitest run",
     "prepare": "husky"
   },
   "author": "Rodrigo Fernandes da Costa",
@@ -38,20 +36,14 @@
   },
   "devDependencies": {
     "@types/node": "^20.12.7",
-    "eslint-config-prettier": "^9.1.0",
     "husky": "^9.0.11",
-    "lint-staged": "^15.2.2",
-    "prettier": "^3.2.5",
-    "vitest": "^1.5.0",
+    "knip": "^5.11.0",
+    "vitest": "^1.5.2",
     "xo": "^0.58.0"
   },
   "xo": {
+    "prettier": true,
     "rules": {
-      "unicorn/better-regex": "off",
-      "no-await-in-loop": "off",
-      "no-useless-escape": "off",
-      "unicorn/no-await-expression-member": "off",
-      "capitalized-comments": "off",
       "unicorn/prevent-abbreviations": [
         "error",
         {
@@ -68,22 +60,17 @@
           }
         }
       ]
-    },
-    "extends": [
-      "prettier"
-    ]
-  },
-  "lint-staged": {
-    "*": [
-      "prettier --no-error-on-unmatched-pattern --ignore-unknown --write"
-    ],
-    "*.{js,jsx,mjs}": [
-      "xo src --fix",
-      "vitest --run related"
-    ]
+    }
   },
   "prettier": {
+    "singleQuote": false,
+    "bracketSpacing": true,
     "trailingComma": "all",
     "printWidth": 100
+  },
+  "knip": {
+    "ignore": [
+      "src/index.d.ts"
+    ]
   }
 }
