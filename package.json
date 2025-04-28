@@ -1,6 +1,6 @@
 {
   "name": "@fcostarodrigo/exec",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Wrapper around node spawn process",
   "main": "src/index.js",
   "type": "module",
