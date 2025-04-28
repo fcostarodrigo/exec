@@ -1,11 +1,12 @@
 import process from "node:process";
-import { test, expect, vi, beforeEach } from "vitest";
+import { beforeEach, expect, test, vi } from "vitest";
+
 import { exec } from "./exec.js";
 
 vi.stubGlobal("console", {
+  error: vi.fn(),
   log: vi.fn(),
   warn: vi.fn(),
-  error: vi.fn(),
 });
 
 beforeEach(() => {
@@ -14,16 +15,16 @@ beforeEach(() => {
 
 const nodePath = `"${process.execPath}"`;
 
-test("Hello world!", async () => {
-  expect(await exec(nodePath, [["-p", "'Hello world!'"]])).toBe("Hello world!");
+test("Hello World!", async () => {
+  expect(await exec(nodePath, [["-p", "'Hello World!'"]])).toBe("Hello World!");
 });
 
-test("Print output", async () => {
-  await exec(nodePath, [["-p", "'Hello world!'"]], {
-    printOutput: true,
+test("Print command", async () => {
+  await exec(nodePath, [["-p", "'Hello World!'"]], {
+    printCommand: true,
   });
 
-  const output = `↪ ${nodePath} \\\n  -p 'Hello world!'`;
+  const output = `↪ ${nodePath} \\\n  -p 'Hello World!'`;
 
   expect(console.log).toHaveBeenCalledWith(output);
 });

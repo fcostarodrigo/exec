@@ -2,29 +2,17 @@ import { parseCommand } from "./parse-command.js";
 
 const prompt = "↪";
 
-function isOptions(arg) {
-  return !Array.isArray(arg) && typeof arg === "object" && arg !== null;
-}
-
-function getOptions(args) {
-  return args.flat().find((arg) => isOptions(arg)) ?? {};
-}
-
-function getArguments(args) {
-  return args.flat().filter((arg) => !isOptions(arg));
-}
-
 export function parseExecArgs(command, ...args) {
   const {
+    env = {},
     inherit = false,
     printOutput = false,
     printCommand = inherit || printOutput,
     proxy = false,
-    stdin = "",
-    spawnOptions = {},
-    env = {},
-    spinner = false,
     retries = 1,
+    spawnOptions = {},
+    spinner = false,
+    stdin = "",
     timeout = null,
   } = getOptions(args);
 
@@ -34,21 +22,33 @@ export function parseExecArgs(command, ...args) {
   const tokens = parseCommand(command).concat(args.flat(Number.POSITIVE_INFINITY));
 
   return {
+    command: [command, ...normalizedArgs].join(" "),
     options: {
-      inherit,
-      printOutput,
-      printCommand,
-      proxy,
-      stdin,
-      spawnOptions: { ...spawnOptions },
       env: { ...env },
-      spinner,
+      inherit,
+      printCommand,
+      printOutput,
+      proxy,
       retries,
+      spawnOptions: { ...spawnOptions },
+      spinner,
+      stdin,
       timeout,
     },
     printCommand: [prompt, [command, ...normalizedArgs].join(" \\\n  ")].join(" "),
-    command: [command, ...normalizedArgs].join(" "),
     program: tokens[0],
     programArguments: tokens.slice(1),
   };
+}
+
+function getArguments(args) {
+  return args.flat().filter((arg) => !isOptions(arg));
+}
+
+function getOptions(args) {
+  return args.flat().find((arg) => isOptions(arg)) ?? {};
+}
+
+function isOptions(arg) {
+  return !Array.isArray(arg) && typeof arg === "object" && arg !== null;
 }

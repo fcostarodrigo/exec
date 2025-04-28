@@ -1,7 +1,8 @@
-import { spawn } from "node:child_process";
 import { Buffer } from "node:buffer";
+import { spawn } from "node:child_process";
 import process from "node:process";
 import ora from "ora";
+
 import { parseExecArgs } from "../src/parse-exec-args.js";
 
 export async function exec(rawCommand, ...args) {
